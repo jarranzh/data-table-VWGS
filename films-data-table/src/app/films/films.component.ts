@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilmsService } from './films.service';
 import { Film, Genre } from './film';
 import { Store } from '@ngxs/store';
-import { GetFilmsListAction, GetGenresListAction } from '../states/film.actions';
+import { DeleteFilmAction, GetFilmsListAction, GetGenresListAction } from '../states/film.actions';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -19,16 +19,23 @@ export class FilmsComponent implements OnInit {
 
   constructor(private store: Store) { 
     this.films$ = this.store.select(state => state.filmsDataTable.films);
+    this.films$.subscribe(data => this.films = data);
     this.genres$ = this.store.select(state => state.filmsDataTable.genre);
   }
 
   ngOnInit(): void {
-    this.getFilms();
+    if(this.films.length === 0) {
+      this.getFilms();
+    }
     this.getGenresList();
   }
 
   getFilms(): void {
     this.store.dispatch(new GetFilmsListAction());
+  }
+
+  deleteFilm(id: number): void {
+    this.store.dispatch(new DeleteFilmAction(id));
   }
 
   getGenresList(): void {

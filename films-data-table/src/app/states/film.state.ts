@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State, Selector, StateContext } from '@ngxs/store';
-import { GetFilmsListAction, GetGenresListAction } from './film.actions';
+import { DeleteFilmAction, GetFilmsListAction, GetGenresListAction } from './film.actions';
 import { Observable, tap } from 'rxjs';
 import { FilmsService } from '../films/films.service';
 import { Film, FilmResponse, Genre, GenresResponse } from '../films/film';
@@ -38,6 +38,13 @@ export class FilmState {
       ctx.patchState({films: response.results})
     }))
   }
+
+  @Action(DeleteFilmAction)
+  public deleteFilm(ctx: StateContext<FilmsStateModel>, { payload }: DeleteFilmAction): void {
+    const state = ctx.getState();
+    const newFilmsList = state.films.filter(e => e.id != payload);
+    ctx.patchState({ films: newFilmsList});
+    }
 
   @Action(GetGenresListAction)
   public getGenresList(ctx: StateContext<FilmsStateModel>): Observable<GenresResponse> {

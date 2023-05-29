@@ -10,6 +10,11 @@ export class GetGenresListAction {
   constructor() {}
 }
 
+export class DeleteFilmAction {
+  public static readonly type = '[DeleteFilm] action';
+  constructor(public payload: number) {}
+}
+
 export class SetFilm {
   public static readonly type = '[SetFilm] action';
   constructor(public payload: FilmsStateModel) {}

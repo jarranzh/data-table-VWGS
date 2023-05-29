@@ -1,17 +1,23 @@
-<p>films works!</p>
-
+<h1>POPULAR FILMS</h1>
 <table>
   <tr>
-    <th>Título</th>
-    <th>Género</th>
-    <th>Fecha de estreno</th>
-    <th>Puntuación</th>
+    <th>Title</th>
+    <th>Genre</th>
+    <th>Release date</th>
+    <th>Rating</th>
+    <th>Actions</th>
   </tr>
   <tr *ngFor="let film of films$ | async">
     <td>{{film.title}}</td> 
     <td>{{film.genre_ids}}</td>
     <td>{{film.release_date}}</td>
     <td>{{film.vote_average}}</td>
+    <td>
+      <a href="">See details</a>
+      <button (click)="deleteFilm(film.id)">Remove film</button>
+      <button>Modify film</button>
+    </td>
   </tr>
-
 </table>
+
+<button>Add film</button>
