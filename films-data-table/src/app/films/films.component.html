@@ -1,6 +1,17 @@
 <p>films works!</p>
-<ul>
-  <li *ngFor="let film of films">
-    <p>{{film.title}}</p>
-  </li>
-</ul>
+
+<table>
+  <tr>
+    <th>Título</th>
+    <th>Género</th>
+    <th>Fecha de estreno</th>
+    <th>Puntuación</th>
+  </tr>
+  <tr *ngFor="let film of films$ | async">
+    <td>{{film.title}}</td> 
+    <td>{{film.genre_ids}}</td>
+    <td>{{film.release_date}}</td>
+    <td>{{film.vote_average}}</td>
+  </tr>
+
+</table>
