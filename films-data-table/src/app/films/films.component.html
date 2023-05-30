@@ -13,7 +13,7 @@
     <td>{{film.release_date}}</td>
     <td>{{film.vote_average}}</td>
     <td>
-      <a href="">See details</a>
+      <a [routerLink]="['/details']" [queryParams]="{ id: film.id}">See details</a>
       <button (click)="deleteFilm(film.id)">Remove film</button>
       <button>Modify film</button>
     </td>

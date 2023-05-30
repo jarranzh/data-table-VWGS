@@ -8,11 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FilmsComponent } from './films/films.component';
 import { FilmState } from './states/film.state';
+import { FilmDetailComponent } from './film-detail/film-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FilmsComponent
+    FilmsComponent,
+    FilmDetailComponent
   ],
   imports: [
     BrowserModule,
