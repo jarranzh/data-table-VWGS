@@ -58,7 +58,7 @@ export class FilmEditComponent implements OnInit {
 
   public updateFilm (auxFilmDetails: FilmDetailsResponse){
     this.store.dispatch(new UpdateFilmAction(auxFilmDetails));
-    //this.location.back();
+    this.location.back();
   }
 
   public submit(): void {
