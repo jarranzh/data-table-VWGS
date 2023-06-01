@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State, Selector, StateContext } from '@ngxs/store';
-import { DeleteFilmAction, GetFilmDetailsAction, GetFilmsListAction, GetGenresListAction, UpdateFilmAction } from './film.actions';
+import { DeleteFilmAction, GetFilmDetailsAction, GetFilmsListAction, GetGenresListAction, SaveFilmAction, UpdateFilmAction } from './film.actions';
 import { Observable, tap } from 'rxjs';
 import { FilmsService } from '../films/films.service';
 import { Film, FilmResponse, Genre, GenresResponse } from '../films/film';
@@ -58,8 +58,17 @@ export class FilmState {
     const newFilmsList = currentFilmsList.map((e:Film) => e.id === payload.id ? {...e, ...payload} : {...e});
     let currentFilmsDetailsList = JSON.parse(JSON.stringify(ctx.getState().filmDetails));
     const newFilmsDetailsList = currentFilmsDetailsList.map((e:Film) => e.id === payload.id ? {...e, ...payload} : {...e});
-    ctx.patchState({ films: newFilmsList,  filmDetails: newFilmsDetailsList});
+    ctx.patchState({ films: newFilmsList, filmDetails: newFilmsDetailsList});
     }
+
+  @Action(SaveFilmAction)
+  public saveFilm(ctx: StateContext<FilmsStateModel>, { payload }: UpdateFilmAction): void { 
+    let currentFilmsList = JSON.parse(JSON.stringify(ctx.getState().films));
+    currentFilmsList.push(payload);
+    let currentFilmsDetailsList = JSON.parse(JSON.stringify(ctx.getState().filmDetails));
+    currentFilmsDetailsList.push(payload);
+    ctx.patchState({ films: currentFilmsList, filmDetails: currentFilmsDetailsList});
+  }
 
   @Action(DeleteFilmAction)
   public deleteFilm(ctx: StateContext<FilmsStateModel>, { payload }: DeleteFilmAction): void {

@@ -19,6 +19,11 @@ export class UpdateFilmAction {
   constructor(public payload: FilmDetailsResponse) {}
 }
 
+export class SaveFilmAction {
+  public static readonly type = '[SAveFilm] action';
+  constructor(public payload: FilmDetailsResponse) {}
+}
+
 export class DeleteFilmAction {
   public static readonly type = '[DeleteFilm] action';
   constructor(public payload: number) {}

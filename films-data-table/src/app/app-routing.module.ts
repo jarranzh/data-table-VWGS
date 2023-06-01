@@ -13,6 +13,9 @@ const routes: Routes = [
   },
   {
     path: 'details-edit', component: FilmEditComponent
+  },
+  {
+    path: 'add-film', component: FilmEditComponent
   }
 ];
 
