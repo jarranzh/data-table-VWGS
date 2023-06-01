@@ -1,4 +1,4 @@
-import { FilmsStateModel } from './film.state';
+import { FilmDetailsResponse } from '../film-detail/film-detail';
 
 export class GetFilmsListAction {
   public static readonly type = '[GetFilmsList] action';
@@ -14,12 +14,12 @@ export class GetGenresListAction {
   constructor() {}
 }
 
+export class UpdateFilmAction {
+  public static readonly type = '[UpdateFilm] action';
+  constructor(public payload: FilmDetailsResponse) {}
+}
+
 export class DeleteFilmAction {
   public static readonly type = '[DeleteFilm] action';
   constructor(public payload: number) {}
-}
-
-export class SetFilm {
-  public static readonly type = '[SetFilm] action';
-  constructor(public payload: FilmsStateModel) {}
 }

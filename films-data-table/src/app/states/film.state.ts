@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, State, Selector, StateContext } from '@ngxs/store';
-import { DeleteFilmAction, GetFilmDetailsAction, GetFilmsListAction, GetGenresListAction } from './film.actions';
+import { DeleteFilmAction, GetFilmDetailsAction, GetFilmsListAction, GetGenresListAction, UpdateFilmAction } from './film.actions';
 import { Observable, tap } from 'rxjs';
 import { FilmsService } from '../films/films.service';
 import { Film, FilmResponse, Genre, GenresResponse } from '../films/film';
@@ -39,6 +39,7 @@ export class FilmState {
   @Action(GetFilmsListAction)
   public getFilmsList(ctx: StateContext<FilmsStateModel>): Observable<FilmResponse> {
     return this.filmService.getFilms().pipe(tap((response: FilmResponse) => {
+      response.results.map(e => ctx.dispatch(new GetFilmDetailsAction(e.id)));
       ctx.patchState({films: response.results})
     }))
   }
@@ -46,9 +47,19 @@ export class FilmState {
   @Action(GetFilmDetailsAction)
   public getFilmDetails(ctx: StateContext<FilmsStateModel>, { payload }: GetFilmDetailsAction): Observable<FilmDetailsResponse> {
     return this.filmService.getFilmDetail(payload).pipe(tap((response: FilmDetailsResponse) => {
-      ctx.patchState({filmDetails: [response]})
+      var currentFilmDetails = ctx.getState().filmDetails;
+      ctx.patchState({filmDetails: [...currentFilmDetails, response]});
     }))
   }
+
+  @Action(UpdateFilmAction)
+  public updateFilm(ctx: StateContext<FilmsStateModel>, { payload }: UpdateFilmAction): void {
+    let currentFilmsList = JSON.parse(JSON.stringify(ctx.getState().films));
+    const newFilmsList = currentFilmsList.map((e:Film) => e.id === payload.id ? {...e, ...payload} : {...e});
+    let currentFilmsDetailsList = JSON.parse(JSON.stringify(ctx.getState().filmDetails));
+    const newFilmsDetailsList = currentFilmsDetailsList.map((e:Film) => e.id === payload.id ? {...e, ...payload} : {...e});
+    ctx.patchState({ films: newFilmsList,  filmDetails: newFilmsDetailsList});
+    }
 
   @Action(DeleteFilmAction)
   public deleteFilm(ctx: StateContext<FilmsStateModel>, { payload }: DeleteFilmAction): void {

@@ -1,0 +1,8 @@
+<form [formGroup]="filmForm" (ngSubmit)="submit()">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" formControlName="title" required>
+
+  <label for="overview">Overview:</label>
+  <textarea name="overview" id="overview" cols="30" rows="5" formControlName="overview"></textarea>
+  <button type="submit">GUARDAR</button>
+</form>

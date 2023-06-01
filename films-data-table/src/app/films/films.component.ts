@@ -35,7 +35,9 @@ export class FilmsComponent implements OnInit {
   }
 
   deleteFilm(id: number): void {
+    if (confirm('Are you sure yu want to delete this film?')) {
     this.store.dispatch(new DeleteFilmAction(id));
+    }
   }
 
   getGenresList(): void {
